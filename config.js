@@ -1,5 +1,5 @@
 module.exports = {
-    catalogUrl: '#PUBLIC_URL#/catalog.json',
+    catalogUrl: 'https://sit-stac.geoplatform.info/catalog.json',
     catalogTitle: "GeoPlatform STAC",
     allowExternalAccess: true, // Must be true if catalogUrl is not given
     allowedDomains: [],
