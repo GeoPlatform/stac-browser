@@ -11,10 +11,6 @@
     "alternate": {
       "main": "Preferido"
     },
-    "copyGdalVfsUrl": {
-      "generic": "Copiar la URL del VFS de GDAL",
-      "withSource": "Copiar la URL del VFS de GDAL para {source}"
-    },
     "copyUrl": {
       "generic": "Copiar la URL",
       "withSource": "Copiar la URL para {source}"
@@ -35,12 +31,28 @@
   },
   "authentication": {
     "button": {
-      "authenticate": "Autenticar",
-      "authenticated": "Autenticado",
+      "login": "Entrar",
+      "logout": "Salir",
       "title": "Proporciona o actualiza tus credenciales"
     },
+    "chooseMethod": "Elija el método de autenticación",
     "description": "La página solicitada requiere autenticación. Por favor proporcione sus datos de autenticación en el campo de texto que aparece a continuación.",
-    "title": "Autenticación"
+    "loggedOut": "Ha cerrado la sesión con éxito. Ahora puede cerrar esta ventana.",
+    "password": "Contraseña",
+    "required": "Se necesita autenticación",
+    "schemeTypes": {
+      "http": "HTTP {scheme}",
+      "s3": "S3",
+      "signedUrl": "URL Firmada",
+      "oauth2": "OAuth 2",
+      "apiKey": "Llave de API",
+      "openIdConnect": "OpenID Connect"
+    },
+    "title": "Autenticación",
+    "unauthorized": "No tiene permiso para acceder a estos datos. Por favor, inicie sesión.",
+    "unsupported": "No compatible",
+    "unsupportedLong": "Lo sentimos, el método de autenticación {method} no es compatible con STAC Browser.",
+    "user": "Usuario"
   },
   "browse": "Explorar",
   "cancel": "Cancelar",
@@ -286,12 +298,14 @@
     },
     "locatedAt": "El archivo de metadatos STAC se encuentra en:",
     "share": {
+      "bsky": "Bluesky",
       "email": "E-mail",
       "label": "Compartir",
+      "mastodon": "Mastodon.social",
       "message": "{title} está disponible en {url}",
       "sharePageWithOthers": "Comparta la URL de está página donde guste:",
       "title": "Compartir",
-      "twitter": "Twitter",
+      "x": "X (Twitter)",
       "withOthers": "Comparta esta página con otros"
     },
     "stacExtension": "Extensión STAC",

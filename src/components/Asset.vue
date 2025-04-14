@@ -7,12 +7,14 @@
           <b-icon-chevron-right v-else />
         </span>
         <span class="title">{{ asset.title || id }}</span>
-        <div class="badges ml-1" v-if="Array.isArray(asset.roles)">
+        <div class="badges ml-1">
           <b-badge v-if="shown" variant="success" class="shown" :title="$t('assets.currentlyShown')">
             <b-icon-check /> {{ $t('assets.shown') }}
           </b-badge>
           <b-badge v-if="asset.deprecated" variant="warning" class="deprecated">{{ $t('deprecated') }}</b-badge>
-          <b-badge v-for="role in asset.roles" :key="role" :variant="role === 'data' ? 'primary' : 'secondary'" class="role">{{ displayRole(role) }}</b-badge>
+          <template v-if="Array.isArray(asset.roles)">
+            <b-badge v-for="role in asset.roles" :key="role" :variant="role === 'data' ? 'primary' : 'secondary'" class="role">{{ displayRole(role) }}</b-badge>
+          </template>
           <b-badge v-if="shortFileFormat" variant="dark" class="format" :title="fileFormat"><span v-html="shortFileFormat" /></b-badge>
         </div>
       </b-button>
@@ -20,15 +22,15 @@
     <b-collapse :id="uid" v-model="expanded" :accordion="type" role="tabpanel" @input="collapseToggled">
       <template v-if="hasAlternatives">
         <b-tabs card>
-          <b-tab :title="asset.name || $t('assets.alternate.main')" active>
-            <AssetAlternative :asset="asset" :context="context" :shown="shown" hasAlternatives />
+          <b-tab :title="asset['alternate:name'] || $t('assets.alternate.main')" active>
+            <AssetAlternative :asset="asset" :context="context" :shown="shown" hasAlternatives @show="show" />
           </b-tab>
-          <b-tab v-for="(altAsset, key) in alternatives" :title="altAsset.name || key" :key="key">
-            <AssetAlternative :asset="altAsset" :context="context" :shown="shown" hasAlternatives :key="key" />
+          <b-tab v-for="(altAsset, key) in alternatives" :title="altAsset['alternate:name'] || key" :key="key">
+            <AssetAlternative :asset="altAsset" :context="context" :shown="shown" hasAlternatives :key="key" @show="show" />
           </b-tab>
         </b-tabs>
       </template>
-      <AssetAlternative v-else :asset="asset" :context="context" />
+      <AssetAlternative v-else :asset="asset" :context="context" :shown="shown" @show="show" />
     </b-collapse>
   </b-card>
 </template>
@@ -92,7 +94,7 @@ export default {
       return this.definition ? 'itemdef' : 'asset';
     },
     uid() {
-      return `${this.type}-${this.id}`;
+      return `${this.type}-${this.id.toLowerCase().replace(/[^\w]/g, '-')}`;
     },
     fileFormat() {
       if (typeof this.asset.type === "string" && this.asset.type.length > 0) {
@@ -149,6 +151,9 @@ export default {
     collapseToggled(isVisible) {
       let event = isVisible ? 'openCollapsible' : 'closeCollapsible';
       this.$store.commit(event, {type: this.type, uid: this.uid});
+    },
+    show() {
+      this.$emit('show', ...arguments);
     }
   }
 };

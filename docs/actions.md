@@ -11,15 +11,6 @@ All actions for assets are stored in the folder [`src/actions/assets`](../src/ac
 They all implement the [`AssetActionPlugin` interface](../src/actions/AssetActionPlugin.js).
 The actions can be enabled by adding them to the [`assetActions.config.js`](../assetActions.config.js) file.
 
-### cogeo.xyz
-
-Adds an `Open in cogeo.xyz` button that allows to open Cloud-Optimized GeoTiff (COG) files on <https://cogeo.xyz>.
-
-```js
-import CoGeoXyz from './src/actions/assets/CoGeoXyz.js';
-export default { CoGeoXyz };
-```
-
 ### copc.io
 
 Adds an `Open in copc.io` button that allows to open Cloud-Optimized Point Cloud (COPC) files on <https://viewer.copc.io>.
@@ -47,6 +38,44 @@ import GeoJsonIo from './src/actions/assets/GeoJsonIo.js';
 export default { GeoJsonIo };
 ```
 
+### OGC3dTiles
+
+Adds an `Open in Geofox.ai` button that allows to open OGC 3D Tiles files on <https://viewer.geofox.ai> or Cesium Sandcastle.
+
+```js
+import OGC3dTiles from './src/actions/assets/OGC3dTiles.js';
+export default { OGC3dTiles };
+```
+
+### geoparquet.info
+
+Adds an `Open in geoparquet.info` button that allows to open GeoParquet files on <https://geoparquet.info>.
+
+```js
+import Geoparquet from './src/actions/assets/Geoparquet.js';
+export default { Geoparquet };
+```
+
+### potree.org
+
+Adds an `Open in potree.org` button that allows to open COPC and Potree files on <https://potree.org> (via [Darren Wiens](https://mpc-copc-viewer.netlify.app) or [Iconem](https://3d.iconem.com/apps/load_potree_project_from_urlparam) apps)
+
+```js
+import Potree from './src/actions/assets/Potree.js';
+export default { Potree };
+```
+
+### pmtiles.io
+
+Adds an `Open in pmtiles.io` button that allows to open Protomaps PMTiles files on <https://pmtiles.io>.
+
+```js
+import Protomaps from './src/actions/assets/Protomaps.js';
+export default { Protomaps };
+```
+
+
+
 ## Links
 
 All actions for links are stored in the folder [`src/actions/links`](../src/actions/links).
@@ -61,4 +90,22 @@ The link to the XYZ has to follow the [web-map-links extension](https://github.c
 ```js
 import Felt from './src/actions/links/Felt.js';
 export default { Felt };
+```
+
+### pmtiles.io
+
+Adds an `Open in pmtiles.io` button that allows to open Protomaps PMTiles files on <https://pmtiles.io>.
+
+```js
+import Protomaps from './src/actions/assets/Protomaps.js';
+export default { Protomaps };
+```
+
+### OGC3dTiles
+
+Adds an `Open in Geofox.ai` button that allows to open OGC 3D Tiles files on <https://viewer.geofox.ai> or Cesium Sandcastle.
+
+```js
+import OGC3dTiles from './src/actions/assets/OGC3dTiles.js';
+export default { OGC3dTiles };
 ```

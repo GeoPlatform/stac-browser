@@ -11,10 +11,6 @@
     "alternate": {
       "main": "Preferito"
     },
-    "copyGdalVfsUrl": {
-      "generic": "Copia l'URL del VFS GDAL",
-      "withSource": "Copia l'URL del VFS GDAL per {source}"
-    },
     "copyUrl": {
       "generic": "Copia l'URL",
       "withSource": "Copia l'URL per {source}"
@@ -35,12 +31,28 @@
   },
   "authentication": {
     "button": {
-      "authenticate": "Accedi",
-      "authenticated": "Autenticato",
+      "login": "Login",
+      "logout": "Logout",
       "title": "Fornisci o aggiorna le tue credenziali"
     },
+    "chooseMethod": "Scegliere il metodo di autenticazione",
     "description": "La pagina richiesta è ad accesso controllato. Inserisci i tuoi dati di autenticazione nel campo di testo sottostante.",
-    "title": "Accesso"
+    "loggedOut": "Sei stato disconnesso con successo. Puoi chiudere questa finestra ora.",
+    "password": "Password",
+    "required": "Autenticazione richiesta",
+    "schemeTypes": {
+      "http": "HTTP {scheme}",
+      "s3": "S3",
+      "signedUrl": "URL firmato",
+      "oauth2": "OAuth 2",
+      "apiKey": "Chiave API",
+      "openIdConnect": "OpenID Connect"
+    },
+    "title": "Accesso",
+    "unauthorized": "Non hai i permessi per accedere a questi dati. Effettua il login.",
+    "unsupported": "Non supportato",
+    "unsupportedLong": "Il metodo di autenticazione {method} non è supportato dal browser STAC.",
+    "user": "Utente"
   },
   "browse": "Esplora",
   "cancel": "Annulla",
@@ -286,12 +298,14 @@
     },
     "locatedAt": "Il file di metadati STAC si trova all'indirizzo:",
     "share": {
+      "bsky": "Bluesky",
       "email": "E-mail",
       "label": "Condividi",
+      "mastodon": "Mastodon.social",
       "message": "{title} è disponibile all'indirizzo {url}",
       "sharePageWithOthers": "Condividi l'URL di questa pagina dove vuoi:",
       "title": "Condivisione",
-      "twitter": "Twitter",
+      "x": "X (Twitter)",
       "withOthers": "Condividi questa pagina con altri"
     },
     "stacExtension": "Estensione STAC",

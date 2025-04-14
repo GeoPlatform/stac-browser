@@ -169,6 +169,12 @@
       ],
       "minimum": 1
     },
+    "maxItemsPerPage": {
+      "type": [
+        "integer"
+      ],
+      "minimum": 1
+    },
     "defaultThumbnailSize": {
       "type": [
         "array",
@@ -203,16 +209,22 @@
     "requestHeaders": {
       "type": [
         "object"
-      ],
-      "noCLI": true,
-      "noEnv": false
+      ]
     },
     "requestQueryParameters": {
       "type": [
         "object"
+      ]
+    },
+    "socialSharing": {
+      "type": [
+        "array"
       ],
-      "noCLI": true,
-      "noEnv": true
+      "items": {
+        "type": [
+          "string"
+        ]
+      }
     },
     "preprocessSTAC": {
       "type": [
@@ -226,49 +238,11 @@
       "type": [
         "object"
       ],
-      "properties": {
-        "type": {
-          "type": [
-            "null",
-            "string"
-          ],
-          "enum": [
-            "query",
-            "header"
-          ]
-        },
-        "key": {
-          "type": [
-            "string"
-          ]
-        },
-        "formatter": {
-          "oneOf": [
-            {
-              "type": [
-                "null"
-              ],
-              "format": "function"
-            },
-            {
-              "type": [
-                "string"
-              ],
-              "enum": [
-                "Bearer"
-              ]
-            }
-          ]
-        },
-        "description": {
-          "type": [
-            "string",
-            "null"
-          ]
+      "allOf": [
+        {
+          "$ref": "https://stac-extensions.github.io/authentication/v1.1.0/schema.json"
         }
-      },
-      "noCLI": true,
-      "noEnv": true
+      ]
     }
   }
 }
