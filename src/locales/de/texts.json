@@ -11,10 +11,6 @@
     "alternate": {
       "main": "Bevorzugt"
     },
-    "copyGdalVfsUrl": {
-      "generic": "Kopiere GDAL VFS Adresse",
-      "withSource": "Kopiere GDAL VFS Adresse für {source}"
-    },
     "copyUrl": {
       "generic": "Kopiere Adresse",
       "withSource": "Kopiere Adresse für {source}"
@@ -35,12 +31,28 @@
   },
   "authentication": {
     "button": {
-      "authenticate": "Anmelden",
-      "authenticated": "Angemeldet",
+      "login": "Anmelden",
+      "logout": "Abmelden",
       "title": "Anmeldedaten bereitstellen oder aktualisieren"
     },
+    "chooseMethod": "Wähle Anmeldemethode",
     "description": "Die angefragte Seite erfordert eine Anmeldung. Bitte die Anmeldedaten unten in das Textfeld eingeben.",
-    "title": "Anmelden"
+    "loggedOut": "Sie wurden erfolgreich abgemeldet. Sie können das Fenster nun schließen.",
+    "password": "Passwort",
+    "required": "Anmeldung erforderlich",
+    "schemeTypes": {
+      "http": "HTTP {scheme}",
+      "s3": "S3",
+      "signedUrl": "Signierte URL",
+      "oauth2": "OAuth 2",
+      "apiKey": "API-Schlüssel",
+      "openIdConnect": "OpenID Connect"
+    },
+    "title": "Anmelden",
+    "unauthorized": "Sie haben keine Berechtigung um diese Daten abzurufen. Bitte melden Sie sich an.",
+    "unsupported": "Nicht unterstützt",
+    "unsupportedLong": "Die Anmeldemethode {method} wird von STAC Browser leider nicht unterstützt.",
+    "user": "Benutzer"
   },
   "browse": "Erkunden",
   "cancel": "Abbrechen",
@@ -81,7 +93,7 @@
     "forbidden": "Die für diese Anfrage angegebenen Anmeldedaten sind ungültig, bspw. ein abgelaufener oder ungültiger API-Schlüssel. Bitte geben Sie andere Anmeldedaten an und versuchen Sie es erneut.",
     "invalidJsonObject": "Die Antwort des Dienstanbieters ist kein gültiges JSON-Objeckt.",
     "invalidStacCollections": "Die Antwort des Dienstanbieters ist keine gültige Liste mit Katalogen.",
-    "invalidStacItems": "Die Antwort des Dienstanbieters ist keine fültige Liste mit Elementen.",
+    "invalidStacItems": "Die Antwort des Dienstanbieters ist keine gültige Liste mit Elementen.",
     "labels": {
       "cause": "Ursache:",
       "code": "Fehlercode:",
@@ -190,7 +202,7 @@
     "email": "E-Mail senden",
     "homepage": "Gehe zur Internetseite",
     "role": {
-      "host": "Datenverbreiter",
+      "host": "Anbieter",
       "licensor": "Lizenzgeber",
       "processor": "Verarbeiter",
       "producer": "Erzeuger"
@@ -221,7 +233,7 @@
     "greaterThanEqual": "größer als oder entspricht",
     "itemIds": "Element-Identifikationsnummern",
     "itemsPerPage": "Elemente pro Seite",
-    "itemsPerPageDescription": "Anzahl der Elemente die pro Seite angefragft wird, maximal {maxItems} Elemente.",
+    "itemsPerPageDescription": "Anzahl der Elemente die pro Seite angefragt wird, maximal {maxItems} Elemente.",
     "lessThan": "kleiner als",
     "lessThanEqual": "kleiner als oder entspricht",
     "likeOperatorDescription": "Platzhalterzeichen können verwendet werden. `_` entspricht einem einzelnen Zeichen, `%` entspricht einer beliebigen Anzahl an Zeichen. Um nach einem Platzhalterzeichen selber zu suchen, müssen ein `\\` vor das Zeichen gesetzt werden.",
@@ -286,12 +298,14 @@
     },
     "locatedAt": "Die Datei mit den STAC-Metadaten befindet sich unter:",
     "share": {
+      "bsky": "Bluesky",
       "email": "E-Mail",
       "label": "Teilen",
+      "mastodon": "Mastodon.social",
       "message": "{title} ist verfügbar unter {url}",
       "sharePageWithOthers": "Teile die Adresse dieser Seite:",
       "title": "Teilen",
-      "twitter": "Twitter",
+      "x": "X (Twitter)",
       "withOthers": "Teile diese Seite mit anderen"
     },
     "stacExtension": "STAC-Erweiterung",

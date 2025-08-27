@@ -1,6 +1,6 @@
 <template>
   <b-container id="stac-browser">
-    <Authentication v-if="doAuth.length > 0" />
+    <Authentication v-if="showLogin" />
     <ErrorAlert v-if="globalError" dismissible class="global-error" v-bind="globalError" @close="hideError" />
     <Sidebar v-if="sidebar" />
     <!-- Header -->
@@ -42,9 +42,10 @@ import STAC from './models/stac';
 import Utils from './utils';
 import URI from 'urijs';
 
-import I18N from '@radiantearth/stac-fields/I18N';
-import { translateFields, API_LANGUAGE_CONFORMANCE, loadMessages } from './i18n';
+import { API_LANGUAGE_CONFORMANCE } from './i18n';
 import { getBest, prepareSupported } from './locale-id';
+import BrowserStorage from "./browser-store";
+import Authentication from "./components/Authentication.vue";
 
 Vue.use(AlertPlugin);
 Vue.use(ButtonGroupPlugin);
@@ -64,7 +65,15 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   mode: CONFIG.historyMode,
   base: CONFIG.pathPrefix,
-  routes: getRoutes(CONFIG)
+  routes: getRoutes(CONFIG),
+  scrollBehavior: (to, from, savedPosition) => {
+    if (to.path !== from.path) {
+      return { x: 0, y: 0 };
+    }
+    else {
+      return savedPosition;
+    }
+  }
 });
 
 // Setup store
@@ -80,8 +89,8 @@ for(let key in CONFIG) {
   };
   Watchers[key] = {
     immediate: true,
-    handler: function(newValue) {
-      this.$store.commit('config', {
+    handler: async function(newValue) {
+      await this.$store.dispatch('config', {
         [key]: newValue
       });
     }
@@ -93,7 +102,7 @@ export default {
   router,
   store,
   components: {
-    Authentication: () => import('./components/Authentication.vue'),
+    Authentication,
     ErrorAlert,
     Sidebar: () => import('./components/Sidebar.vue'),
     StacHeader
@@ -109,15 +118,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(['allowSelectCatalog', 'data', 'dataLanguage', 'description', 'doAuth', 'globalError', 'stateQueryParameters', 'title', 'uiLanguage', 'url']),
+    ...mapState(['allowSelectCatalog', 'data', 'dataLanguage', 'description', 'globalError', 'stateQueryParameters', 'title', 'uiLanguage', 'url']),
     ...mapState({
-      catalogUrlFromVueX: 'catalogUrl',
       detectLocaleFromBrowserFromVueX: 'detectLocaleFromBrowser',
-      fallbackLocaleFromVueX: 'fallbackLocale',
       supportedLocalesFromVueX: 'supportedLocales',
       storeLocaleFromVueX: 'storeLocale'
     }),
     ...mapGetters(['displayCatalogTitle', 'fromBrowserPath', 'isExternalUrl', 'root', 'supportsConformance', 'toBrowserPath']),
+    ...mapGetters('auth', ['showLogin']),
     browserVersion() {
       if (typeof STAC_BROWSER_VERSION !== 'undefined') {
         return STAC_BROWSER_VERSION;
@@ -131,12 +139,12 @@ export default {
     ...Watchers,
     title(title) {
       document.title = title;
+      document.getElementById('og-title').setAttribute("content", title);
     },
     description(description) {
-      let element = document.getElementById('meta-description');
-      if (element) {
-        element.setAttribute("content", Utils.summarizeMd(description, 200));
-      }
+      const summary = Utils.summarizeMd(description, 200);
+      document.getElementById('meta-description').setAttribute("content", summary);
+      document.getElementById('og-description').setAttribute("content", summary);
     },
     uiLanguage: {
       immediate: true,
@@ -145,18 +153,12 @@ export default {
           return;
         }
 
-        // Update stac-fields
-        I18N.locales = [locale];
-        I18N.translate = translateFields;
-
-        // Load messages
-        await loadMessages(locale);
-
         // Set the locale for vue-i18n
         this.$root.$i18n.locale = locale;
 
         // Update the HTML lang tag
         document.documentElement.setAttribute("lang", locale);
+        document.getElementById('og-locale').setAttribute("content", locale);
 
         this.$root.$emit('uiLanguageChanged', locale);
       }
@@ -181,15 +183,9 @@ export default {
             // A better way would be to combine the language code and URL as the index in the browser database
             // This needs a database refactor though: https://github.com/radiantearth/stac-browser/issues/231
             this.$store.commit('resetCatalog', true);
-            await this.$store.dispatch("load", { url, loadApi: true, show: true });
+            await this.$store.dispatch("load", { url, show: true });
           }
         }
-      }
-    },
-    catalogUrlFromVueX(url) {
-      if (url) {
-        // Load the root catalog data if not available (e.g. after page refresh or external access)
-        this.$store.dispatch("load", { url, loadApi: true });
       }
     },
     stateQueryParameters: {
@@ -244,9 +240,10 @@ export default {
           value = root['stac_browser'][key]; // Custom value from root
         }
 
-        // Commit config
+        // Update config in store
         if (typeof value !== 'undefined') {
-          this.$store.commit('config', { [key]: value });
+          this.$store.dispatch('config', { [key]: value })
+            .catch(error => console.error(error));
         }
       }
     },
@@ -259,7 +256,7 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     this.$router.onReady(() => {
       this.detectLocale();
       this.parseQuery(this.$route);
@@ -281,7 +278,16 @@ export default {
 
       this.$store.commit(resetOp);
       this.parseQuery(to);
+
+      document.getElementById('og-url').setAttribute("content", window.location.href);
     });
+
+    const storage = new BrowserStorage(true);
+    const authConfig = storage.get('authConfig');
+    if (authConfig) {
+      storage.remove('authConfig');
+      await this.$store.dispatch('config', { authConfig });
+    }
   },
   mounted() {
     this.$root.$on('error', this.showError);
@@ -292,11 +298,8 @@ export default {
     detectLocale() {
       let locale;
       if (this.storeLocaleFromVueX) {
-        try {
-          locale = window.localStorage.getItem('locale');
-        } catch(error) {
-          console.error(error);
-        }
+        const storage = new BrowserStorage();
+        locale = storage.get('locale');
       }
       if (!locale && this.detectLocaleFromBrowserFromVueX && Array.isArray(navigator.languages)) {
         // Detect the most suitable locale

@@ -1,7 +1,7 @@
 {
     "id": "wildfires-stac",
     "stac_version": "1.0.0",
-    "title": " Wildfires",
+    "title": "Wildfires",
     "description": "This Collection is a virtual catalog of wildfire resources provided by institutions in the United States.",
     "type": "Catalog",
     "links": [
@@ -11,11 +11,11 @@
         },
         {
             "rel": "root",
-            "href": "./wildfires.json"
+            "href": "./catalog.json"
         },
         {
             "rel": "child",
-            "href": "https:/storage.googleapis.com/cfo-public/vegetation/collection.json",
+            "href": "https://storage.googleapis.com/cfo-public/vegetation/collection.json",
             "title": "CFO forest structure and fuels data"
         },
         {

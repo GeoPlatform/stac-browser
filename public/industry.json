@@ -1,7 +1,7 @@
 {
     "id": "industry-stac",
     "stac_version": "1.0.0",
-    "title": " Industry",
+    "title": "Industry",
     "description": "This Collection is a virtual catalog of resources provided by Commerical companies in the United States.",
     "type": "Catalog",
     "links": [
@@ -11,7 +11,7 @@
         },
         {
             "rel": "root",
-            "href": "./industry.json"
+            "href": "./catalog.json"
         },
         {
             "rel": "child",

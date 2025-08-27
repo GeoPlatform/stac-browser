@@ -1,17 +1,17 @@
 {
     "id": "non-profit-stac",
     "stac_version": "1.0.0",
-    "title": " Nonprofit Institutions",
+    "title": "Nonprofit Institutions",
     "description": "This Collection is a virtual catalog of resources provided by Nonprofit Institutions.",
     "type": "Catalog",
     "links": [
         {
             "rel": "self",
-            "href": "./non-profit.json"
+            "href": "./nonprofit.json"
         },
         {
             "rel": "root",
-            "href": "./non-profit.json"
+            "href": "./catalog.json"
         },
         {
             "rel": "child",
@@ -32,11 +32,6 @@
             "rel": "child",
             "href": "https://portal.opentopography.org/stac/catalog.json",
             "title": "OpenTopography"
-        },
-        {
-            "rel": "child",
-            "href": "https://s3.eu-central-1.wasabisys.com/stac/openlandmap/catalog.json",
-            "title": "OpenLandMap STAC"
         }
     ]
 }

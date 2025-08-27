@@ -1,7 +1,7 @@
 {
     "id": "global-stac",
     "stac_version": "1.0.0",
-    "title": " Global",
+    "title": "Global",
     "description": "This Collection is a virtual catalog of global resources provided.",
     "type": "Catalog",
     "links": [
@@ -11,7 +11,7 @@
         },
         {
             "rel": "root",
-            "href": "./global-catalog.json"
+            "href": "./catalog.json"
         },
         {
             "rel": "child",
@@ -52,11 +52,6 @@
             "rel": "child",
             "href": "https://fedeo.ceos.org",
             "title": "FedEO Clearinghouse"
-        },
-        {
-            "rel": "child",
-            "href": "https://s3.eu-central-1.wasabisys.com/stac/odse/catalog.json",
-            "title": "Open Environmental Data Cube Europe"
         },
 	{
             "rel": "child",

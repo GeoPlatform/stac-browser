@@ -131,23 +131,14 @@ export default class Utils {
            fullStr.substr(fullStr.length - backChars);
   }
 
-  static isGdalVfsUri(url) {
-    return typeof url === 'string' && url.startsWith('/vsi') && !url.startsWith('/vsicurl/');
-  }
-
   static toAbsolute(href, baseUrl, stringify = true) {
     return Utils.normalizeUri(href, baseUrl, false, stringify);
   }
 
   static normalizeUri(href, baseUrl = null, noParams = false, stringify = true) {
-    // Convert vsicurl URLs to normal URLs
-    if (typeof href === 'string' && href.startsWith('/vsicurl/')) {
-      href = href.replace(/^\/vsicurl\//, '');
-    }
     // Parse URL and make absolute, if required
     let uri = URI(href);
-    // Don't convert GDAL VFS URIs: https://github.com/radiantearth/stac-browser/issues/116
-    if (baseUrl && uri.is("relative") && !Utils.isGdalVfsUri(href)) {
+    if (baseUrl && uri.is("relative")) {
       uri = uri.absoluteTo(baseUrl);
     }
     uri.normalize();
@@ -170,13 +161,17 @@ export default class Utils {
     return Array.isArray(links) ? links.filter(link => Utils.isObject(link) && Utils.hasText(link.href) && !rels.includes(link.rel)) : [];
   }
 
+  static removeTrailingSlash(str) {
+    return str.replace(/\/$/, '');
+  }
+
   static equalUrl(a, b) {
     try {
       let uri1 = URI(a);
       let uri2 = URI(b);
       // Ignore trailing slash in URL paths
-      uri1.path(uri1.path().replace(/\/$/, ''));
-      uri2.path(uri2.path().replace(/\/$/, ''));
+      uri1.path(Utils.removeTrailingSlash(uri1.path()));
+      uri2.path(Utils.removeTrailingSlash(uri2.path()));
       return uri1.equals(uri2);
     } catch (error) {
       return false;
@@ -213,18 +208,16 @@ export default class Utils {
   // Convert from UTC to locale time (needed for vue2-datetimepicker)
   // see https://github.com/mengxiong10/vue2-datepicker/issues/388
   static dateFromUTC(dt) {
-    if (dt instanceof Date) {
+    if (dt) {
       const value = new Date(dt);
-      const offset = value.getTimezoneOffset();
-      dt = new Date(value.getTime() + offset * 60 * 1000);
+      dt = new Date(value.getTime() + value.getTimezoneOffset() * 60 * 1000);
     }
     return dt;
   }
 
   static dateToUTC(dt) {
     if (dt instanceof Date) {
-      const offset = new Date().getTimezoneOffset();
-      return new Date(dt.getTime() - offset * 60 * 1000);
+      dt = new Date(dt.getTime() - dt.getTimezoneOffset() * 60 * 1000);
     }
     return dt;
   }

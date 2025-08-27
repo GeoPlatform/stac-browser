@@ -1,7 +1,7 @@
 {
-  "id": "state-stac",
+  "id": "ngda-stac",
   "stac_version": "1.0.0",
-  "title": " NGDA",
+  "title": "NGDA",
   "description": "This Collection is a virtual catalog of National Geospatial Data Assets (NGDA) provided by United States federal agencies.",
   "type": "Catalog",
   "links": [
@@ -11,7 +11,7 @@
     },
     {
       "rel": "root",
-      "href": "./ngda.json"
+      "href": "./catalog.json"
     },
     {
       "rel": "child",
@@ -96,7 +96,7 @@
     {
       "rel": "child",
       "href": "https://ngda-utilities-geoplatform.hub.arcgis.com/api/search/v1/collections/dataset",
-      "title": "Utilitities"
+      "title": "Utilities"
     },
     {
       "rel": "child",

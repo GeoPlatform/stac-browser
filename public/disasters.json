@@ -1,7 +1,7 @@
 {
-    "id": "inland-waters-stac",
+    "id": "disasters-stac",
     "stac_version": "1.0.0",
-    "title": " Disasters",
+    "title": "Disasters",
     "description": "This Collection is a virtual catalog of community preparedness and resiliency resources provided by United States federal agencies.",
     "type": "Catalog",
     "links": [
@@ -11,7 +11,7 @@
         },
         {
             "rel": "root",
-            "href": "./disasters.json"
+            "href": "./catalog.json"
         },
         {
             "rel": "child",

@@ -7,25 +7,29 @@ endpoint="" # This remains empty for root-relative paths in public/index.html
 catalog_endpoint="http://localhost:8080" # This should be an absolute URL for the catalog
 support="#"
 
-if [ "$STG_ENV" = "sit" ]; then
+case "$STG_ENV" in
+  sit)
     endpoint="https://sit.geoplatform.info"
     catalog_endpoint="https://sit-stac.geoplatform.info"
     support="https://sit-kb.geoplatform.info"
-elif [ "$STG_ENV" = "sit-tf" ]; then
-    endpoint="https://sit-stac-terraform.geoplatform.info"
+    ;;
+  sit-tf)
+    endpoint="https://sit.geoplatform.info"
     catalog_endpoint="https://sit-stac-terraform.geoplatform.info"
     support="https://sit-kb.geoplatform.info"
-elif [ "$STG_ENV" = "stg" ]; then
+    ;;
+  stg)
     endpoint="https://stg.geoplatform.gov"
     catalog_endpoint="https://stg-stac.geoplatform.gov"
     support="https://stg-kb.geoplatform.gov"
-elif [ "$STG_ENV" = "prd" ]; then
+    ;;
+  prd)
     endpoint="https://www.geoplatform.gov"
     catalog_endpoint="https://stac.geoplatform.gov"
     support="https://kb.geoplatform.gov"
-fi
+    ;;
+esac
 
-sed -i "s|#PUBLIC_URL#|${endpoint}|g" ./public/index.html
-sed -i "s|#SUPPORT_URL#|${support}|g" ./public/index.html
+sed -i -e "s|#PUBLIC_URL#|${endpoint}|g" -e "s|#SUPPORT_URL#|${support}|g" -e "s|#ASSET_URL#|${catalog_endpoint}|g" ./public/index.html
 
-sed -i "s|#PUBLIC_URL#|${catalog_endpoint}|g" ./config.js
+sed -i "s|#CATALOG_URL#|${catalog_endpoint}|g" ./config.js
