@@ -19,9 +19,9 @@ case "$STG_ENV" in
     support="https://sit-kb.geoplatform.info"
     ;;
   stg)
-    endpoint="https://stg.geoplatform.gov"
-    catalog_endpoint="https://stg-stac.geoplatform.gov"
-    support="https://stg-kb.geoplatform.gov"
+    endpoint="https://d1qlgnokfytysj.cloudfront.net"
+    catalog_endpoint="https://d1qlgnokfytysj.cloudfront.net"
+    support="https://d1qlgnokfytysj.cloudfront.net"
     ;;
   prd)
     endpoint="https://www.geoplatform.gov"
